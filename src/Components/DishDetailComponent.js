@@ -1,75 +1,96 @@
-import React, {Component} from 'react';
-import {Card, CardBody, CardImg, CardText, CardTitle} from 'reactstrap';
+import React from 'react';
+import {Link} from 'react-router-dom';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Card,
+  CardBody,
+  CardImg,
+  CardText,
+  CardTitle,
+} from 'reactstrap';
 
-class DishDetail extends Component {
-  renderDish(dish) {
-    if (dish != null)
-      return (
-        <div className='col-12 col-md-5 m-1'>
-          <Card>
-            <CardImg top src={dish.image} alt={dish.name} />
-            <CardBody>
-              <CardTitle>{dish.name}</CardTitle>
-              <CardText>{dish.description}</CardText>
-            </CardBody>
-          </Card>
-        </div>
-      );
-    else return <div></div>;
-  }
-
-  renderComments(comments) {
-    if (comments != null) {
-      const month = [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'June',
-        'July',
-        'Aug',
-        'Sept',
-        'Oct',
-        'Nov',
-        'Dec',
-      ];
-      return (
-        <div className='col-12 col-md-5 m-1'>
-          <h4>Comments</h4>
-          {comments.map((comment) => {
-            const date = new Date(comment.date);
-            return (
-              <div>
-                <p>{comment.comment}</p>
-                <p>
-                  -- {comment.author},
-                  <span className='ml-2'>
-                    {`${
-                      month[date.getUTCMonth()]
-                    } ${date.getUTCDate()}, ${date.getUTCFullYear()}`}
-                  </span>
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      );
-    } else {
-      return <div></div>;
-    }
-  }
-
-  render() {
+const RenderDish = ({dish}) => {
+  if (dish != null)
     return (
-      <div className='container'>
-        <div className='row'>
-          {this.renderDish(this.props.dish)}
-          {this.renderComments(this.props.dishComments)}
-        </div>
+      <Card>
+        <CardImg top src={dish.image} alt={dish.name} />
+        <CardBody>
+          <CardTitle>{dish.name}</CardTitle>
+          <CardText>{dish.description}</CardText>
+        </CardBody>
+      </Card>
+    );
+  else return <div></div>;
+};
+
+const RenderComments = ({comments}) => {
+  if (comments != null) {
+    const month = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'June',
+      'July',
+      'Aug',
+      'Sept',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return (
+      <div>
+        <h4>Comments</h4>
+        {comments.map((comment) => {
+          const date = new Date(comment.date);
+          return (
+            <div key={comment.id}>
+              <p>{comment.comment}</p>
+              <p>
+                -- {comment.author},
+                <span className='ml-2'>
+                  {`${
+                    month[date.getUTCMonth()]
+                  } ${date.getUTCDate()}, ${date.getUTCFullYear()}`}
+                </span>
+              </p>
+            </div>
+          );
+        })}
       </div>
     );
+  } else {
+    return <div></div>;
   }
-}
+};
+
+const DishDetail = (props) => {
+  return (
+    <div className='container'>
+      <div className='row'>
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to='/menu'>Menu</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+        </Breadcrumb>
+        <div className='col-12'>
+          <h3>{props.dish.name}</h3>
+          <hr />
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col-12 col-md-5 m-1'>
+          <RenderDish dish={props.dish} />
+        </div>
+        <div className='col-12 col-md-5 m-1'>
+          <RenderComments comments={props.comments} />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default DishDetail;

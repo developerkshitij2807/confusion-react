@@ -49,3 +49,15 @@ React component consists of three stages
         => componentDidUpdate 
 
 
+### React virtual DOM
+=> A lightweight representation of browser DOM
+=> In memory, like the tree data structure of plain JS objects
+=> Manuplates extremely fast compared to scratch on every setState
+
+Updating the DOM 
+    => Diffing algorithm will detect those nodes which are changed
+    => Updates entire subtree iff, diffing detects two elements that are stable 
+    => Using key, you can hint child elements as stable 
+    => No re-rendering will occur as the keys will not change
+
+    
