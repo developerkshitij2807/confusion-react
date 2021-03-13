@@ -22,11 +22,12 @@ class Header extends Component {
   constructor(props) {
     super(props);
 
-    this.toggleNav = this.toggleNav.bind(this);
     this.state = {
       isNavOpen: false,
       isModalOpen: false,
     };
+
+    this.toggleNav = this.toggleNav.bind(this);
 
     this.toggleModal = this.toggleModal.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -135,13 +136,13 @@ class Header extends Component {
                     Us
                   </NavLink>
                 </NavItem>
-                <NavItem>
-                  <Button outline onClick={this.toggleModal}>
-                    <span className='fa fa-sign-in fa-lg'></span> Login
-                  </Button>
-                </NavItem>
               </Nav>
             </Collapse>
+            <NavItem className='navbar-nav mr-auto'>
+              <Button outline onClick={this.toggleModal}>
+                <span className='fa fa-sign-in fa-lg'></span> Login
+              </Button>
+            </NavItem>
           </div>
         </Navbar>
         <Jumbotron>
