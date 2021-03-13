@@ -60,4 +60,17 @@ Updating the DOM
     => Using key, you can hint child elements as stable 
     => No re-rendering will occur as the keys will not change
 
-    
+
+### React router
+=> Collection of navigational components
+=> Router components are route matching components and navigational components
+=> Uses a browser-based book markable URLs as an instruction to navigate to a client generated view in your app
+    => Can also pass along optional parameters
+
+### Web App Routing 
+Route matching components path enables specification of current location's path name. 
+<Route> component prop specifies view for location 
+=> Using exact attribute means that the path must be exactly matched 
+=> Redirect enables exact route specification 
+=> Switch enables grouping togeather several routes, iterates over its children
+
