@@ -78,7 +78,9 @@ Route matching components path enables specification of current location's path 
 
 ### React redux
 => Predictable state container for JS Applications
+
 => Inspired by flux, elm, and immutable data objects
+
 => Makes state mutations predictable
 
 => There is a single source of truth 
@@ -96,6 +98,7 @@ Route matching components path enables specification of current location's path 
 
 #### Properties 
 => State: plain JS object 
+
 => Action: plaint JS Object with a type field that specifies how to change something in state
     - payloads of information sends data from your application to the store
     - plain JS object that must have:
@@ -110,7 +113,9 @@ Route matching components path enables specification of current location's path 
         => actions typically handled through a switch statement 
         => switching on the action type
         => return the previous state in default case
+
 => Reducer: pure functions that the current state and the action have
+
 => Store: 
         - Holds the current state value
         - created using createStore()
@@ -118,6 +123,7 @@ Route matching components path enables specification of current location's path 
             => dispatch(): states state update with the provided object
             => getState(): returns the current stored state value
             => subscribe(): accepts a callback function, that will be run everytime action is dispatched
+
 => Middleware:
         - Forms the pipeline the wraps around the dispatch
         - Pass actions onward
