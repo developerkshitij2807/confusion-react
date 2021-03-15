@@ -2,7 +2,14 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
 import {Breadcrumb, BreadcrumbItem, Button, Row, Col, Label} from 'reactstrap';
-import {Control, LocalForm, Errors} from 'react-redux-form';
+import {Control, Form, Errors} from 'react-redux-form';
+
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !val || val.length <= len;
+const minLength = (len) => (val) => val && val.length >= len;
+const isNumber = (val) => !isNaN(Number(val));
+const validEmail = (val) =>
+  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 class Contact extends Component {
   constructor(props) {
@@ -14,16 +21,20 @@ class Contact extends Component {
   handleSubmit(values) {
     console.log('Current State is: ' + JSON.stringify(values));
     alert('Current State is: ' + JSON.stringify(values));
+    this.props.postFeedback(
+      values.firstname,
+      values.lastname,
+      values.telnum,
+      values.email,
+      values.contactType,
+      values.agree,
+      values.message
+    );
+    this.props.resetFeedbackForm();
     // event.preventDefault();
   }
 
   render() {
-    const required = (val) => val && val.length;
-    const maxLength = (len) => (val) => !val || val.length <= len;
-    const minLength = (len) => (val) => val && val.length >= len;
-    const isNumber = (val) => !isNaN(Number(val));
-    const validEmail = (val) =>
-      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
     return (
       <div className='container'>
         <div className='row'>
@@ -34,18 +45,19 @@ class Contact extends Component {
             <BreadcrumbItem active>Contact Us</BreadcrumbItem>
           </Breadcrumb>
           <div className='col-12'>
-            <h3>Contact Us</h3>
             <div className='row row-content'>
               <div className='col-12'>
                 <h3>Send us your Feedback</h3>
               </div>
               <div className='col-12 col-md-9'>
-                <LocalForm >
+                <Form
+                  model='feedback'
+                  onSubmit={(values) => this.handleSubmit(values)}>
                   <Row className='form-group'>
-                    <Label htmlFor='firstname' md={2}>
+                    <Label htmlFor='firstname' md={4}>
                       First Name
                     </Label>
-                    <Col md={10}>
+                    <Col md={8}>
                       <Control.text
                         model='.firstname'
                         id='firstname'
@@ -71,10 +83,10 @@ class Contact extends Component {
                     </Col>
                   </Row>
                   <Row className='form-group'>
-                    <Label htmlFor='lastname' md={2}>
+                    <Label htmlFor='lastname' md={4}>
                       Last Name
                     </Label>
-                    <Col md={10}>
+                    <Col md={8}>
                       <Control.text
                         model='.lastname'
                         id='lastname'
@@ -100,10 +112,10 @@ class Contact extends Component {
                     </Col>
                   </Row>
                   <Row className='form-group'>
-                    <Label htmlFor='telnum' md={2}>
+                    <Label htmlFor='telnum' md={4}>
                       Contact Tel.
                     </Label>
-                    <Col md={10}>
+                    <Col md={8}>
                       <Control.text
                         model='.telnum'
                         id='telnum'
@@ -131,10 +143,10 @@ class Contact extends Component {
                     </Col>
                   </Row>
                   <Row className='form-group'>
-                    <Label htmlFor='email' md={2}>
+                    <Label htmlFor='email' md={4}>
                       Email
                     </Label>
-                    <Col md={10}>
+                    <Col md={8}>
                       <Control.text
                         model='.email'
                         id='email'
@@ -158,13 +170,50 @@ class Contact extends Component {
                     </Col>
                   </Row>
                   <Row className='form-group'>
+                    <Col md={{size: 4}}>
+                      <div className='form-check'>
+                        <Label check>
+                          <Control.checkbox
+                            model='.agree'
+                            name='agree'
+                            className='form-check-input'
+                          />
+                          <strong>May we contact you?</strong>
+                        </Label>
+                      </div>
+                    </Col>
+                    <Col md={{size: 8}}>
+                      <Control.select
+                        model='.contactType'
+                        name='contactType'
+                        className='form-control'>
+                        <option>Tel.</option>
+                        <option>Email</option>
+                      </Control.select>
+                    </Col>
+                  </Row>
+                  <Row className='form-group'>
+                    <Label htmlFor='message' md={4}>
+                      Your Feedback
+                    </Label>
+                    <Col md={8}>
+                      <Control.textarea
+                        model='.message'
+                        id='message'
+                        name='message'
+                        rows='4'
+                        className='form-control'
+                      />
+                    </Col>
+                  </Row>
+                  <Row className='form-group'>
                     <Col md={{size: 10, offset: 2}}>
                       <Button type='submit' color='primary'>
                         Send Feedback
                       </Button>
                     </Col>
                   </Row>
-                </LocalForm>
+                </Form>
               </div>
             </div>
           </div>
@@ -186,7 +235,7 @@ class Contact extends Component {
               <br />
               <i className='fa fa-fax'></i>: +852 8765 4321
               <br />
-              <i className='fa fa-envelope'></i>:{' '}
+              <i className='fa fa-envelope'></i>:
               <a href='mailto:confusion@food.net'>confusion@food.net</a>
             </address>
           </div>

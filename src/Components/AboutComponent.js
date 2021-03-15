@@ -8,23 +8,11 @@ import {
   Media,
 } from 'reactstrap';
 import {Link} from 'react-router-dom';
+import {Loading} from './LoadingComponent';
+import {baseUrl} from '../shared/baseUrl';
+import {Fade, Stagger} from 'react-animation-components';
 
 function About(props) {
-  const leaders = props.leaders.map((leader) => {
-    return (
-      <div className='media row mt-2'>
-        <div className='media-left col-2'>
-          <img src={leader.image} className='media-object' alt={leader.name} />
-        </div>
-        <div className='media-body col-10'>
-          <h4 className='media-heading'>{leader.name}</h4>
-          <h5>{leader.designation}</h5>
-          <p>{leader.description}</p>
-        </div>
-      </div>
-    );
-  });
-
   return (
     <div className='container'>
       <div className='row'>
@@ -101,11 +89,48 @@ function About(props) {
           <h2>Corporate Leadership</h2>
         </div>
         <div className='col-12'>
-          <Media list>{leaders}</Media>
+          <Media list>
+            <Stagger in>
+              <Leaders
+                data={props.leaders.leaders}
+                loading={props.leaders.isLoading}
+                error={props.leaders.errMess}
+              />
+            </Stagger>
+          </Media>
         </div>
       </div>
     </div>
   );
 }
+
+const Leaders = (props) => {
+  if (props.loading) {
+    return <Loading />;
+  } else if (props.error) {
+    return <h4>{props.error}</h4>;
+  } else {
+    return props.data.map((leader) => {
+      return (
+        <Fade in>
+          <div className='media row mt-2'>
+            <div className='media-left col-2'>
+              <img
+                src={baseUrl + leader.image}
+                className='media-object'
+                alt={leader.name}
+              />
+            </div>
+            <div className='media-body col-10'>
+              <h4 className='media-heading'>{leader.name}</h4>
+              <h5>{leader.designation}</h5>
+              <p>{leader.description}</p>
+            </div>
+          </div>
+        </Fade>
+      );
+    });
+  }
+};
 
 export default About;

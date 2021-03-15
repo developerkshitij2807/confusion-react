@@ -1,22 +1,22 @@
 import * as ActionTypes from './ActionTypes';
 
-export const Dishes = (
-  state = {isLoading: true, errMess: null, dishes: []},
+export const Leaders = (
+  state = {isLoading: true, errMess: null, leaders: []},
   action
 ) => {
   switch (action.type) {
-    case ActionTypes.ADD_DISHES:
+    case ActionTypes.ADD_LEADERS:
       return {
         ...state,
         isLoading: false,
         errMess: null,
-        dishes: action.payload,
+        leaders: action.payload,
       };
 
-    case ActionTypes.DISHES_LOADING:
-      return {...state, isLoading: true, errMess: null, dishes: []};
+    case ActionTypes.LEADERS_LOADING:
+      return {...state, isLoading: true, errMess: null, leaders: []};
 
-    case ActionTypes.DISHES_FAILED:
+    case ActionTypes.LEADERS_FAILED:
       return {...state, isLoading: false, errMess: action.payload};
 
     default:

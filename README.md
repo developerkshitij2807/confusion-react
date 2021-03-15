@@ -74,3 +74,61 @@ Route matching components path enables specification of current location's path 
 => Redirect enables exact route specification 
 => Switch enables grouping togeather several routes, iterates over its children
 
+
+
+### React redux
+=> Predictable state container for JS Applications
+=> Inspired by flux, elm, and immutable data objects
+=> Makes state mutations predictable
+
+=> There is a single source of truth 
+    - Single state object
+    - state is read-only
+    - changes are made with pure functions
+    - takes previous state and actions and returns the next state
+
+=> Single store and single state tree enables powerful techniques
+    - Logging 
+    - API Handling 
+    - Undo/redo
+    - state/persistence
+    - "time travelling debugging"
+
+#### Properties 
+=> State: plain JS object 
+=> Action: plaint JS Object with a type field that specifies how to change something in state
+    - payloads of information sends data from your application to the store
+    - plain JS object that must have:
+        => a type property, that indicates the type of action to be performed
+        => Rest of the object contains the data neccessary for the action 
+    - Action Creators
+        => encapsulate the process of creating action object
+        => returns the object
+        => results action object can be passed to store through dispatch
+    - Action & Reducers 
+        => does not mutate the state
+        => actions typically handled through a switch statement 
+        => switching on the action type
+        => return the previous state in default case
+=> Reducer: pure functions that the current state and the action have
+=> Store: 
+        - Holds the current state value
+        - created using createStore()
+        - supplies 3 methods 
+            => dispatch(): states state update with the provided object
+            => getState(): returns the current stored state value
+            => subscribe(): accepts a callback function, that will be run everytime action is dispatched
+=> Middleware:
+        - Forms the pipeline the wraps around the dispatch
+        - Pass actions onward
+        - Provides the capability to run code after an action is dispatched, but before it reaches the middleware
+        - third party extension point 
+        - ex. dogging, API calls
+        - Restart the dispatch pipeline 
+        - Acess the store state
+
+=> Thunk: 
+    - Can be used to delay the dispatch of an action, or 
+        => Dispatch only if a certain condition is met
+        => Inner function receives the dispatch and getState() store methods
+
